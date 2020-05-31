@@ -1,13 +1,29 @@
 ﻿module Hashing
 
+open System.Net
+open System.Diagnostics
+
+
+
+// getting random bytes from  www.random.org/bytes given in the assignment.
+let RandomBits bits =
+    use wb = new WebClient() 
+    let bytes = bits / 8 + 1           // computing number of bytes 
+    let correction = bytes * 8 - bits  // computing number of bits we have to correct by right shifting 
+    wb.DownloadString(@"https://www.random.org/cgi-bin/randbyte?nbytes=" + string bytes + "&format=b")
+    |> fun str -> Array.filter (fun c -> c = '1' || c = '0' ) [| for c in str -> c |]
+    |> Array.map byte
+    |> bigint
+    |> fun bint -> bint >>> correction
+
+
 
 // ----------------------------------- part 1.1 ------------------------------------ //
-
 
 // Del 1 (a)
 // The inline force generic types on a and x, hence
 // makes 
-let multiplyShift a l x = (a * x) >>> (64 - l)
+let inline multiplyShift a l x = (a * x) >>> (64 - l)
 
 // Del 1 (b)
 // here we use the result of assignment 3  exercise 2.7 
@@ -38,26 +54,3 @@ let rec randomUint89m1 (rnd : System.Random) =
     let r = bigint b
     if r = (bigint 1 <<< 89) - (bigint 1) then randomUint89m1 rnd else r // Try again if we are unlucky. Really shouldn't happen
 
-// Del 1 (c)
-let testRunTime n l (h : (uint64 -> uint64)) = 
-    let stream = DataStream.createStream n l
-    let stopWatch = System.Diagnostics.Stopwatch.StartNew()
-    let multShiftSum = Seq.fold (+) 0UL (Seq.map (fun (x,s) -> h x) stream)
-    stopWatch.Stop()
-    printfn "sum: %A time: %A" multShiftSum stopWatch.Elapsed.TotalMilliseconds
-
-
-let test () =
-    let rnd = System.Random()
-
-    let a = randomUint64 rnd
-    let n = 1000000
-    let msh = multiplyShift a 20
-    printfn "Multiply Shift"
-    testRunTime n 20 msh
-
-    let ma = randomUint89m1 rnd
-    let mb = randomUint89m1 rnd
-    let mmp = multiplyModPrime ma mb 20
-    printfn "Multiply Mod Prime"
-    testRunTime n 20 mmp
