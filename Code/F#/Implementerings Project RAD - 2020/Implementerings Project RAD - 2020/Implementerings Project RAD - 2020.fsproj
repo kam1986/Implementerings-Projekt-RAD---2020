@@ -1,16 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Implementerings_Project_RAD___2020</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="DataStream.fs" />
     <Compile Include="Hashing.fs" />
     <Compile Include="HashTable.fs" />
+    <Compile Include="CountSketch.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
-
 </Project>
