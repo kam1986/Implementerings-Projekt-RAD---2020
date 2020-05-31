@@ -36,7 +36,7 @@ let rec randomUint89m1 (rnd : System.Random) =
     rnd.NextBytes ( b )
     b.[0] <- b.[0] &&& byte 1 // Discard all but the first bit
     let r = bigint b
-    if r = (bigint 2 <<< 89) - (bigint 1) then randomUint89m1 rnd else r // Try again if we are unlucky. Really shouldn't happen
+    if r = (bigint 1 <<< 89) - (bigint 1) then randomUint89m1 rnd else r // Try again if we are unlucky. Really shouldn't happen
 
 // Del 1 (c)
 let testRunTime n l (h : (uint64 -> uint64)) = 
