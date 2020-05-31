@@ -19,17 +19,14 @@ let createStream ( n : int ) ( l : int ) : seq<uint64 * int> =
         
         for i = 1 to ( n /3) do
             x <- x + a
-        
-        yield ( x &&& (((1UL <<< l ) - 1UL ) <<< 30) , 1)
+            yield ( x &&& (((1UL <<< l ) - 1UL ) <<< 30) , 1)
         
         for i = 1 to ((n + 1) /3) do
             x <- x + a
-        
-        yield ( x &&& (((1UL <<< l ) - 1UL ) <<< 30) , -1)
+            yield ( x &&& (((1UL <<< l ) - 1UL ) <<< 30) , -1)
         
         for i = 1 to ( n + 2) /3 do
             x <- x + a
-        
-        yield ( x &&& (((1UL <<< l ) - 1UL ) <<< 30) , 1)
+            yield ( x &&& (((1UL <<< l ) - 1UL ) <<< 30) , 1)
     }
 
