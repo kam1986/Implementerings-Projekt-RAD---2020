@@ -1,0 +1,84 @@
+\documentclass[14pt,reqno]{article}
+\usepackage[a4paper, hmargin={2.8cm, 2.8cm}, vmargin={2.5cm, 2.5cm}]{geometry}
+\usepackage{lipsum}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+\usepackage[babel, da]{ku-forside} % KU-forside
+\usepackage[explicit]{titlesec}
+
+%% images
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{subcaption}
+
+% page setup, page numbering ..
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage[svgnames]{xcolor}
+ \definecolor{urlcol}{RGB}{076,000,150}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=urlcol,
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[c]{\textbf{Interaktionsdesign - Eksamens besvarelse af Kasper Alex Madsen}}
+\rfoot{Side \thepage \hspace{1pt} af \pageref{LastPage}}
+%\renewcommand\thesubsection{(\alph{subsection})}
+
+\usepackage{blindtext}
+
+%math
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\newcommand{\indep}{\rotatebox[origin=c]{90}{$\models$}}
+
+
+% graph library
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+
+
+\titel{Assignment 1} %Skriv jeres projektnummer (1-8}
+\undertitel{} %Skriv titlen på jeres projekt
+\opgave{Implementering af programmeringssprog 2020} 
+\forfatter{Kasper Alex Madsen - cdt 183 }%Skriv jeres gruppenummer
+\dato{Institut of Computer science. \today} %"today" skriver automatisk dagens dato. 
+
+
+
+
+
+\begin{document}
+\maketitle
+\newpage
+\setcounter{page}{1}
+\tableofcontents
+\newpage
+% Reshapes the section headers to add the number afterward and center it
+\titleformat{\section}{\normalfont\Large\bfseries\filcenter}{}{0em}{#1\ \thesection}
+
+% ---------------------------------- Første opgave ----------------------
+
+%\bibliographystyle{unsrt}
+%\bibliography{kilder}
+
+\end{document}
