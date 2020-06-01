@@ -8,7 +8,9 @@
     <Compile Include="DataStream.fs" />
     <Compile Include="Hashing.fs" />
     <Compile Include="HashTable.fs" />
+    <Compile Include="Tests.fs" />
     <Compile Include="CountSketch.fs" />
+    <Compile Include="LatexGenerator.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 </Project>

@@ -1,36 +1,43 @@
 ﻿module CountSketch
 
 open Hashing
-
-
+open Tests
 // Opgave 4
-let fourIndependent coef (x : int64) =
-    let p = (bigint 1 <<< 89) - bigint 1
+let fourIndependent coef (x : uint64) =
+    let p = (1I <<< 89) - 1I
 
     let rec eval coef x =
         match coef with 
         | c :: cs -> 
             c + x * (eval cs x)                
             |> fun x -> (x &&& p) + (x >>> 89)      // computing x mod p 
-        | [] -> bigint 0
+        | [] -> 0I
 
-    eval coef (bigint x)
+    let r = eval coef (bigint x)
+    if r >= p then r - p else r
 
 
 
 // Opgave 5
-let CountSketchHash t x =
-    let m = bigint 1 <<< t
-    // RandomBits 88 can return 2^89-1 as result hence we subtract 1 to eliminate this. 
-    let coef = [ for c in 0 .. 3 -> RandomBits 88 - bigint 1 ] 
-    let g = fourIndependent coef x
-    let s = bigint 1 - bigint 2 * (g >>> 89)
-    let h =
-        (g &&& m) + (g >>> t)
-        |> fun y -> if y < m then y else y - m
+let CSHash (g : (uint64 -> bigint)) t x =
+    let m = bigint 1 <<< t 
+    let gx = g x
+    let s = 1 - 2 * int (gx >>> 89)
+    let h = int (gx &&& (m - 1I))
     (h, s)
 
+let getCountSketchHash t =
+    let coef = [ for c in 0 .. 3 -> randomUint89m1 () ] 
+    let g = fourIndependent coef
+    CSHash g t 
+    
 
 // Opgave 6
-// Seq takes any Ienumerable i.e. list, arrays, sets with many more.
-let inline S C = Seq.sumBy (fun cy -> cy * cy) C
+// 
+let CountSketch m (g : uint64 -> (int*int)) (stream : seq<uint64*int>) =
+    let C = Array.zeroCreate m
+    let evaluate (x,d) =
+        let (h,s) = g x
+        C.[h] <- C.[h] + s * d
+    Seq.iter evaluate stream
+    Array.fold (fun acc elem -> acc + elem * elem) 0 C
