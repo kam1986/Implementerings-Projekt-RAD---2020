@@ -49,8 +49,8 @@ let testHash () =
 
 // Del 2 hashtable testing
 
-// for reuse of the S value, it take a stream of tokens (uint64 * int) 
-// a hash function at the parameters for that hashfunction
+// for reuse of the S value, it takes a stream of tokens (uint64 * int) 
+// a hash function and the parameters for that hashfunction
 let S stream l hash hashparams =
     let table = init l (hash hashparams)
     Seq.fold (fun table (x, d) -> increment x d table) table stream
@@ -65,7 +65,6 @@ let S stream l hash hashparams =
   
 
 let TestHashtable n l hash hashparams =
-    let table = init l (hash hashparams)
     let stream = DataStream.createStream n l
     S stream l hash hashparams
 

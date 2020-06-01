@@ -10,9 +10,11 @@ let RandomBits bits =
     use wb = new WebClient() 
     let bytes = bits / 8 + 1           // computing number of bytes 
     let correction = bytes * 8 - bits  // computing number of bits we have to correct by right shifting 
+    // getting random bytes
     wb.DownloadString(@"https://www.random.org/cgi-bin/randbyte?nbytes=" + string bytes + "&format=b")
+    // filter noise
     |> fun str -> Array.filter (fun c -> c = '1' || c = '0' ) [| for c in str -> c |]
-    |> Array.map byte
+    |> Array.map byte 
     |> bigint
     |> fun bint -> bint >>> correction
 
