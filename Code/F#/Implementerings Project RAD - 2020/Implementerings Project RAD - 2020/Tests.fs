@@ -59,12 +59,10 @@ let S stream l hash hashparams =
         Array.fold 
             ( fun sum lst -> 
                 List.sumBy 
-                    ( fun (x, d) -> // might be wrong can't find def of s(x)
-                        let x' = bigint(x: uint64)
-                        let d' = bigint(d: int)
-                        x'* x' * d'
+                    ( fun (_, d) -> // might be wrong can't find def of s(x)
+                         int64 (d * d)
                     ) lst + sum
-            ) (bigint 0) table
+            ) (int64 0) table
   
 
 let TestHashtable n l hash hashparams =

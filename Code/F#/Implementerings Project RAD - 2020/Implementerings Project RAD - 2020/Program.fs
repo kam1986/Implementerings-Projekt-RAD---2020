@@ -31,7 +31,8 @@ let main argv =
     let stream = createStream n l
 
     let mean =
-        Seq.fold (fun table x -> increment x 1 table) () table
+        Seq.fold (fun table x -> increment x 1 table) () stream
+
     
    
 
