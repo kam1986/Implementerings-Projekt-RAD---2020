@@ -34,13 +34,13 @@ let testRunTime n l (h : (uint64 -> uint64)) =
 let testHash () =
     let a = randomUint64 ()
     let n = 1000000
-    let msh = multiplyShift a 20
+    let msh = multiplyShift (a, 20)
     printfn "Multiply Shift"
     testRunTime n 20 msh
 
     let ma = randomUint89m1 ()
     let mb = randomUint89m1 ()
-    let mmp = multiplyModPrime ma mb 20
+    let mmp = multiplyModPrime (ma, mb, 20)
     printfn "Multiply Mod Prime"
     testRunTime n 20 mmp
 
