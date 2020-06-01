@@ -3,7 +3,7 @@
 
 // A hash table which is a table of list containing tuples of key, value pairs
 // and a hash function
-type HashTable = Table of (uint64 * int) list array * (uint64 -> bigint)
+type HashTable = Table of (uint64 * int) list array * (uint64 -> uint64)
 
 
 // init table of size size and with hash function h. 
