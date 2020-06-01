@@ -14,8 +14,11 @@ let RandomBits bits =
     wb.DownloadString(@"https://www.random.org/cgi-bin/randbyte?nbytes=" + string bytes + "&format=b")
     // filter noise
     |> fun str -> Array.filter (fun c -> c = '1' || c = '0' ) [| for c in str -> c |]
+    // casting char to byte for every char in the array
     |> Array.map byte 
+    // converting to bigint
     |> bigint
+    // correcting number of bits
     |> fun bint -> bint >>> correction
 
 

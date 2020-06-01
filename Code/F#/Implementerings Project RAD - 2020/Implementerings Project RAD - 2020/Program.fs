@@ -16,13 +16,7 @@ open Tests
 
 [<EntryPoint>]
 let main argv =
-    (*
-    let a = [1 ; 2 ; 3 ; 4]
-
-        printfn "%A" (fourIndependent (List.map (fun (x : int) -> bigint x) a) 2UL) 
-    *)
-    // set before run, should be altered befor real testing
-    
+    // the last tuple are the argument (minus x) given to the hashfunciton and the form depend on the function.
     let ret = TestHashtable 10000000 20 multiplyShift (523432UL, 20)
     printfn "%d" ret
 
