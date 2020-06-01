@@ -6,6 +6,7 @@ open DataStream
 open Hashing
 open HashTable
 open CountSketch
+open Tests
 
 // webpage for generation of 89 bit random
 // gets it as a string of 0's and 1's.
@@ -23,7 +24,8 @@ let main argv =
     // set before run, should be altered befor real testing
     let n = 0
     let l = 0
-    let a = (int64 << RandomBits) 64 ||| int64 1 // set the least significant bit to 1
+
+    let a = randomUint64 () ||| 1UL // set the least significant bit to 1
     let hash x = multiplyShift a l x
     let tablesize = 0
     let table = init tablesize hash
@@ -31,10 +33,8 @@ let main argv =
     let stream = createStream n l
 
     let mean =
-        Seq.fold (fun table x -> increment x 1 table) () stream
+        Seq.fold (fun table (x,d) -> increment x d table) table stream
 
-    
-   
 
     0 // return an integer exit code
 
