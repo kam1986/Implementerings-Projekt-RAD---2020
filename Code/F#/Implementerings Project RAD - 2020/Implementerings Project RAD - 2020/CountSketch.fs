@@ -9,7 +9,7 @@ let fourIndependent coef (x : uint64) =
     let rec eval coef x =
         match coef with 
         | c :: cs -> 
-            c + x * (eval cs x)                
+            c + x * (eval cs x)              
             |> fun x -> (x &&& p) + (x >>> 89)      // computing x mod p 
         | [] -> 0I
 
@@ -20,7 +20,7 @@ let fourIndependent coef (x : uint64) =
 
 // Opgave 5
 let CSHash (g : (uint64 -> bigint)) t x =
-    let m = bigint 1 <<< t 
+    let m = 1I <<< t 
     let gx = g x
     let s = 1 - 2 * int (gx >>> 89)
     let h = int (gx &&& (m - 1I))

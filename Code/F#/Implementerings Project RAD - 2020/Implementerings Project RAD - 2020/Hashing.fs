@@ -25,12 +25,12 @@ let RandomBits bits =
 // Del 1 (a)
 // The inline force generic types on a and x, hence
 // makes 
-let inline multiplyShift a l x = (a * x) >>> (64 - l)
+let inline multiplyShift (a, l) x = (a * x) >>> (64 - l)
 
 // Del 1 (b)
 // here we use the result of assignment 3  exercise 2.7 
 // where we rewrite x to a more suitable size
-let multiplyModPrime a b l (x : uint64) =
+let multiplyModPrime (a, b, l) (x : uint64) =
     let w = bigint 1 <<< 89
     let p = w - bigint 1
 

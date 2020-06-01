@@ -22,19 +22,9 @@ let main argv =
         printfn "%A" (fourIndependent (List.map (fun (x : int) -> bigint x) a) 2UL) 
     *)
     // set before run, should be altered befor real testing
-    let n = 0
-    let l = 0
-
-    let a = randomUint64 () ||| 1UL // set the least significant bit to 1
-    let hash x = multiplyShift a l x
-    let tablesize = 0
-    let table = init tablesize hash
-
-    let stream = createStream n l
-
-    let mean =
-        Seq.fold (fun table (x,d) -> increment x d table) table stream
-
+    
+    let ret = TestHashtable 10000000 20 multiplyShift (523432UL, 20)
+    printfn "%d" ret
 
     0 // return an integer exit code
 

@@ -8,7 +8,7 @@ type HashTable = Table of (uint64 * int) list array * (uint64 -> uint64)
 
 // init table of size size and with hash function h. 
 let init size h = 
-    let table = [| for i in 1 .. size -> [] |]
+    let table = [| for i in 1 .. int (2. ** float size) -> [] |]
     Table (table, h)
 
 let get x (Table (table, h)) =
