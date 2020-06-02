@@ -6,8 +6,8 @@ open System.Diagnostics
 // project code
 open Hashing
 open HashTable
+open DataStream
 
-let rnd = System.Random()
 let randomUint64 () =
     let b : byte [] = Array.zeroCreate 8
     rnd.NextBytes ( b )
