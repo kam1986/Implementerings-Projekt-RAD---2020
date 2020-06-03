@@ -14,7 +14,13 @@ open RandomTool
 
 [<EntryPoint>]
 let main argv =
-    // the last tuple are the argument (minus x) given to the hashfunciton and the form depend on the function.
-    presentExperiment 10000 15 10
+
+    let n = 500000
+    let l = 27
+    //TestHashtable n |> ignore
+    let ms = [9;18;27]
+    let stream = DataStream.createStream n l
+    List.iter (presentExperiment stream) ms
+    //presentExperiment stream 6
     0 // return an integer exit code
 
