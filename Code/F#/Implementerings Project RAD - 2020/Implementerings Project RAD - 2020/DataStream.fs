@@ -1,5 +1,6 @@
 ﻿module DataStream
-let rnd = System.Random()
+open RandomTool
+
 let createStream ( n : int ) ( l : int ) : seq<uint64 * int> =
     seq {
         // We generate a random uint64 number .

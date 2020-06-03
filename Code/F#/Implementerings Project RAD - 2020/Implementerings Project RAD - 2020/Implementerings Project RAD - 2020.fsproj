@@ -5,12 +5,13 @@
     <RootNamespace>Implementerings_Project_RAD___2020</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="RandomTool.fs" />
     <Compile Include="DataStream.fs" />
     <Compile Include="Hashing.fs" />
     <Compile Include="HashTable.fs" />
-    <Compile Include="Tests.fs" />
     <Compile Include="CountSketch.fs" />
     <Compile Include="LatexGenerator.fs" />
+    <Compile Include="Tests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 </Project>

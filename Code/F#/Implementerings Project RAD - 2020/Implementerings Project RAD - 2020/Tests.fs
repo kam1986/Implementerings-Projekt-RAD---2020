@@ -2,25 +2,12 @@
 
 // stopwatch lib
 open System.Diagnostics
-
 // project code
 open Hashing
 open HashTable
 open DataStream
-
-let randomUint64 () =
-    let b : byte [] = Array.zeroCreate 8
-    rnd.NextBytes ( b )
-    Array.fold (fun acc elem -> (acc <<< 8) + uint64 elem) 0UL b
-
-let rec randomUint89m1 () =
-    let b : byte [] = Array.zeroCreate 12
-    rnd.NextBytes ( b )
-    b.[0] <- b.[0] &&& byte 1 // Discard all but the first bit
-    let r = bigint b
-    if r = (1I <<< 89) - 1I then randomUint89m1 () else r // Try again if we are unlucky. Really shouldn't happen
-
-
+open RandomTool
+open System.IO
 
 // Del 1 (1.c)
 let testRunTime n l (h : (uint64 -> uint64)) = 
@@ -71,4 +58,43 @@ let TestHashtable n l hash hashparams =
     S stream l hash hashparams
 
 
+// m: Size of Count Sketch container 
+let experiments (m : int) stream =
+    let evaluateCountSketch i =
+        printfn "%A" i
+        (CountSketch.CountSketch m (CountSketch.getCountSketchHash m) stream)
+
+    List.init 100 evaluateCountSketch
+
+let meanSquare X S =
+    let res = List.sumBy (fun x -> (double (S-x)) ** 2.0) X
+    (double res) / double (List.length X)
+
+let presentExperiment (n : int) l (m : int) =
+    let stream = DataStream.createStream n l
+    let X = experiments m stream
+    let Xsort = List.sort X
+    let xAxis = List.init 100 id 
+    let realS = S stream m multiplyShift (randomUint64 (), m)  // calculate S here
+    printfn "Resulting estimators"
+    printfn "%A" Xsort
+    printfn "Actual Value"
+    printfn "%A" realS
+    printfn "Mean Square (estimated varians): %A" (meanSquare Xsort (int realS))
+    printfn "Calculated Varians: %A" (2.0 * (double realS) ** 2.0 / (double (1 <<< m)))
+    let Xres = String.concat " " (List.map (fun x -> string x) Xsort) 
+
+    // Grouping into size 11
+
+    let groupedX = List.init 9 (fun x -> X.[x*11..x*11+10])
+    let medianX = List.map (List.sort >> (List.item 5)) groupedX
+    let sortedmedianX = List.sort medianX
+    printfn "Resulting estimators with grouping"
+    printfn "%A" sortedmedianX
+
+    let XmedRes = String.concat " " (List.map (fun x -> string x) sortedmedianX) 
+
+    let fileName = "./" + (String.concat "_" (List.map (fun x -> string x) [n;m;l])) + ".txt"
+    let res = String.concat "\n" [Xres; XmedRes; string realS]
+    File.WriteAllText(fileName,res) 
 

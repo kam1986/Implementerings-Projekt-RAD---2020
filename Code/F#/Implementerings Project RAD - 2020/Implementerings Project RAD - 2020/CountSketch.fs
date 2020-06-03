@@ -1,7 +1,7 @@
 ﻿module CountSketch
 
 open Hashing
-open Tests
+open RandomTool
 // Opgave 4
 let fourIndependent coef (x : uint64) =
     let p = (1I <<< 89) - 1I
@@ -22,7 +22,7 @@ let fourIndependent coef (x : uint64) =
 let CSHash (g : (uint64 -> bigint)) t x =
     let m = 1I <<< t 
     let gx = g x
-    let s = 1 - 2 * int (gx >>> 89)
+    let s = 1 - 2 * int (gx >>> 88)
     let h = int (gx &&& (m - 1I))
     (h, s)
 
@@ -35,7 +35,7 @@ let getCountSketchHash t =
 // Opgave 6
 // 
 let CountSketch m (g : uint64 -> (int*int)) (stream : seq<uint64*int>) =
-    let C = Array.zeroCreate m
+    let C = Array.zeroCreate (1 <<< m)
     let evaluate (x,d) =
         let (h,s) = g x
         C.[h] <- C.[h] + s * d
