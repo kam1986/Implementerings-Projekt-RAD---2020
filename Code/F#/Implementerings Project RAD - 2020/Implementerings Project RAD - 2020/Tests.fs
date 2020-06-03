@@ -95,6 +95,12 @@ let presentExperiment (n : int) l (m : int) =
     let XmedRes = String.concat " " (List.map (fun x -> string x) sortedmedianX) 
 
     let fileName = "./" + (String.concat "_" (List.map (fun x -> string x) [n;m;l])) + ".txt"
-    let res = String.concat "\n" [Xres; XmedRes; string realS]
+    let res = String.concat "\n" [
+        Xres; 
+        XmedRes; 
+        string realS; 
+        string (meanSquare Xsort (int realS)); 
+        string (2.0 * (double realS) ** 2.0 / (double (1 <<< m)))
+    ]
     File.WriteAllText(fileName,res) 
 
